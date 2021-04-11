@@ -31,6 +31,7 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    pokemon: [{ type: Schema.Types.ObjectId, ref: 'CreatedPokemon' }]
 }, {
     timestamps: true,
 })
