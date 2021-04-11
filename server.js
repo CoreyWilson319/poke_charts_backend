@@ -32,12 +32,14 @@ const authRouter = require('./routes/auth')
 const userRouter = require('./routes/user')
 const createdPokemonRouter = require('./routes/createdPokemon')
 const pokedexPokemonRouter = require('./routes/pokedexPokemon')
+const chartRouter = require('./routes/chart')
 
 
 app.use("/auth", authRouter);
-app.use("/chart", createdPokemonRouter);
+app.use("/create", createdPokemonRouter);
 app.use("/pokedex", pokedexPokemonRouter);
 app.use("/user", userRouter);
+app.use("/chart", chartRouter);
 
 // Starts Server
 app.listen(PORT, () => {

@@ -1,9 +1,9 @@
 const router = require("express").Router();
 
-// GET
+// GET 'pokedex'
 // SHOW ALL POKEMON
 
-// GET
+// GET 'pokedex/:id'
 // SHOW SINGLE POKEMON BY DEX NUMBER (ID)
 
 module.exports = router;
