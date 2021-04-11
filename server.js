@@ -29,9 +29,15 @@ connection.once("open", () => {
 
 
 const authRouter = require('./routes/auth')
+const userRouter = require('./routes/user')
+const createdPokemonRouter = require('./routes/createdPokemon')
+const pokedexPokemonRouter = require('./routes/pokedexPokemon')
 
 
 app.use("/auth", authRouter);
+app.use("/chart", createdPokemonRouter);
+app.use("/pokedex", pokedexPokemonRouter);
+app.use("/user", userRouter);
 
 // Starts Server
 app.listen(PORT, () => {
