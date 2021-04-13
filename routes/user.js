@@ -28,7 +28,7 @@ router.get("/:username", auth, async (req, res) => {
 
 // PUT
 // UPDATE PUBLIC
-router.put("/:username", auth, async (req, res) => {
+router.put("/:username/public", auth, async (req, res) => {
     try {
         user = await User.findOne({_id: req.user.id})
         if (user.username != req.params.username){
