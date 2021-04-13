@@ -9,9 +9,6 @@ router.post("/user/login", (req, res) => {
     username,
     email,
     password,
-    first_name,
-    last_name,
-    location,
   } = req.body;
 
   // Simple Validation
@@ -44,11 +41,10 @@ router.post("/user/login", (req, res) => {
               token: token,
               user: {
                 id: user.id,
-                last_name: user.last_name,
                 email: user.email,
                 username: user.username,
-                facility: user.facility,
-                title: user.title,
+                pokemon: user.pokemon,
+                public: user.public
               },
             });
           }
@@ -62,13 +58,11 @@ router.post("/user/register", (req, res) => {
     username,
     email,
     password,
-    first_name,
-    last_name,
-    location,
+    public
   } = req.body;
 
   // Simple Validation
-  if (!last_name || !email || !username || !password) {
+  if (!email || !username || !password) {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
   // Check if user exist
@@ -77,13 +71,11 @@ router.post("/user/register", (req, res) => {
       return res.status(400).json({ msg: "User already exist" });
 
     const newUser = new User({
-      first_name,
-      last_name,
       email,
       // We don't want to store a raw password so we need to hash it
       password,
       username,
-      location,
+      public
     });
 
     // Create salt & hash
@@ -115,10 +107,11 @@ router.post("/user/register", (req, res) => {
                 token: token,
                 user: {
                   id: user.id,
-                  last_name: user.last_name,
                   email: user.email,
                   username: user.username,
-                  location: user.location,
+                  pokemon: user.pokemon,
+                  public: user.public
+
                 },
               });
             }

@@ -19,16 +19,8 @@ const userSchema = new Schema({
         required: true,
         minlength: 8
     },
-    first_name: {
-        type: String,
-        required: true,
-    },
-    last_name: {
-        type: String,
-        required: true,
-    },
-    location: {
-        type: String,
+    public: {
+        type: Boolean,
         required: true
     },
     pokemon: [{ type: Schema.Types.ObjectId, ref: 'CreatedPokemon' }]
