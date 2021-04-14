@@ -5,52 +5,42 @@ const Schema = mongoose.Schema;
 const pokedexPokemonSchema = new Schema({
     name: {
         type: String,
-        required: true,
-        minlength: 8
-    },
-    nickname: {
-        type: String,
-    },
-    level: {
-        type: Integer,
+        required: true
     },
     hp: {
-        type: Integer,
+        type: Number,
     },
     attack: {
-        type: Integer,
+        type: Number,
     },
     defense: {
-        type: Integer,
+        type: Number,
     },
     specialAttack: {
-        type: Integer,
+        type: Number,
     },
     specialDefense: {
-        type: Integer,
+        type: Number,
     },
     speed: {
-        type: Integer,
+        type: Number,
     },
-    gMax?: {
-        type: Boolean,
+    move_pool: {
+        type: String
     },
-    shiny?: {
-        type: Boolean,
-    },
-    marks: {
-        type: String,
-    },
-    moves_1: {
+    ability_1: {
         type:String
     },
-    moves_2: {
+    ability_2: {
         type:String
     },
-    moves_3: {
+    id: {
+        type: Number,
+    },
+    type_1: {
         type:String
     },
-    moves_4: {
+    type_2: {
         type:String
     }
 

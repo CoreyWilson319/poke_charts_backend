@@ -12,25 +12,25 @@ const createdPokemonSchema = new Schema({
         type: String,
     },
     level: {
-        type: Integer,
+        type: Number,
     },
     hp: {
-        type: Integer,
+        type: Number,
     },
     attack: {
-        type: Integer,
+        type: Number,
     },
     defense: {
-        type: Integer,
+        type: Number,
     },
     specialAttack: {
-        type: Integer,
+        type: Number,
     },
     specialDefense: {
-        type: Integer,
+        type: Number,
     },
     speed: {
-        type: Integer,
+        type: Number,
     },
     gMax?: {
         type: Boolean,
