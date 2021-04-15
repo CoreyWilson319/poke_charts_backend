@@ -19,8 +19,7 @@ router.get("/seed",  async (req, res) => {
             allPokemon.data.results.forEach(pokemon => {
                 axios.get(pokemon.url)
                 .then((singlePokemon) => {
-                    // console.log(singlePokemon.data)
-                    // FILL DATA HERE
+                    // DEFINE HELPER FUNCTIONS HERE
                     function abilities(pokemonModel){
                         singlePokemon.data.abilities.forEach(abilitySlot => {
                             if (abilitySlot.slot == 1){
@@ -33,7 +32,13 @@ router.get("/seed",  async (req, res) => {
                                 pokemonModel.hidden_ability = abilitySlot.ability.name
                             }
                         });
+                    };
+                    function moves(pokemonModel){
+                        singlePokemon.data.moves.forEach(move => {
+                            pokemonModel.move_pool.push(move.move.name)
+                        })
                     }
+                    // FILL DATA HERE
                     Pokemon.findOne({ dex: singlePokemon.id }).then((poke) => {
                         const newPokemon = new Pokemon({
                             name: singlePokemon.data.name,
@@ -41,7 +46,7 @@ router.get("/seed",  async (req, res) => {
                             ability_1: '',
                             ability_2: '',
                             hidden_ability: '',
-                            // move_pool: singlePokemon.data.moves,
+                            move_pool: [],
                             // hp: singlePokemon.data.stats[0],
                             // attack: singlePokemon.data.stats[1],
                             // defense: singlePokemon.data.stats[2],
@@ -51,11 +56,15 @@ router.get("/seed",  async (req, res) => {
                             // type_1: singlePokemon.data.types[0],
                             // type_2: singlePokemon.data.type[1],
                         })
+                        // Call helper functions here
                         abilities(newPokemon)
+                        moves(newPokemon)
+
+                        // Save Model to database
 
 
 
-                        // console.log("searching", singlePokemon.data.abilities[0])
+                        // console.log("searching", singlePokemon.data.moves)
                         console.log("newPokemon", newPokemon)
                         })
                 })

@@ -25,9 +25,9 @@ const pokedexPokemonSchema = new Schema({
     speed: {
         type: Number,
     },
-    move_pool: {
+    move_pool: [{
         type: String
-    },
+    }],
     ability_1: {
         type:String
     },
