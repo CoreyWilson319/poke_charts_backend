@@ -7,9 +7,6 @@ let Pokemon = require("../models/pokedexPokemon.model");
 // ADD POKEMON TO POKEDEX DATABASE
 // ONLY NEEDS TO BE RAN ONCE TO FILL DB
 router.get("/seed",  async (req, res) => {
-
-    // Leaving off here, make a function for the first api call, if next == true use recurssion and run function again on next
-    // else do nothing done
     try {
 
         async function seedData(link){
@@ -40,7 +37,6 @@ router.get("/seed",  async (req, res) => {
                     }
                     function stats(pokemonModel){
                         singlePokemon.data.stats.forEach(stat => {
-                            // console.log("stat", stat.stat.name)
                             if (stat.stat.name == 'hp'){
                                 pokemonModel.hp = stat.base_stat
                             }
@@ -66,18 +62,6 @@ router.get("/seed",  async (req, res) => {
                         const newPokemon = new Pokemon({
                             name: singlePokemon.data.name,
                             dex: singlePokemon.data.id,
-                            // ability_1: '',
-                            // ability_2: '',
-                            // hidden_ability: '',
-                            move_pool: [],
-                            // hp: singlePokemon.data.stats[0],
-                            // attack: singlePokemon.data.stats[1],
-                            // defense: singlePokemon.data.stats[2],
-                            // specialAttack: singlePokemon.data.stats[3],
-                            // specialDefense: singlePokemon.data.stats[4],
-                            // speed: singlePokemon.data.stats[5],
-                            // type_1: singlePokemon.data.types[0],
-                            // type_2: singlePokemon.data.type[1],
                         })
                         // Call helper functions here
                         abilities(newPokemon)
@@ -85,10 +69,7 @@ router.get("/seed",  async (req, res) => {
                         stats(newPokemon)
 
                         // Save Model to database
-
-
-
-                        // console.log("searching", singlePokemon.data.stats)
+                        newPokemon.save()
                         console.log("newPokemon", newPokemon)
                         })
                 })
@@ -107,8 +88,24 @@ router.get("/seed",  async (req, res) => {
 
 // GET 'pokedex'
 // SHOW ALL POKEMON
+router.get("/", async (req, res) => {
+    try {
+        let found_mons = await Pokemon.find()
+        res.status(200).json(found_mons)
+    } catch(err) {
+        res.status(400).json({msg: err})
+    }
+})
 
-// GET 'pokedex/:id'
+// GET 'pokedex/:name'
 // SHOW SINGLE POKEMON BY DEX NUMBER (ID)
+router.get("/:name", async (req, res) => {
+    try {
+        let found_mon = await Pokemon.find({'name': req.params.name})
+        res.status(200).json(found_mon)
+    } catch(err) {
+        res.status(400).json({msg: err})
+    }
+})
 
 module.exports = router;
