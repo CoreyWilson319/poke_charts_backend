@@ -16,10 +16,10 @@ const pokedexPokemonSchema = new Schema({
     defense: {
         type: Number,
     },
-    specialAttack: {
+    special_attack: {
         type: Number,
     },
-    specialDefense: {
+    special_defense: {
         type: Number,
     },
     speed: {

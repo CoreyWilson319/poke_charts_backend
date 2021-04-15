@@ -38,14 +38,37 @@ router.get("/seed",  async (req, res) => {
                             pokemonModel.move_pool.push(move.move.name)
                         })
                     }
+                    function stats(pokemonModel){
+                        singlePokemon.data.stats.forEach(stat => {
+                            // console.log("stat", stat.stat.name)
+                            if (stat.stat.name == 'hp'){
+                                pokemonModel.hp = stat.base_stat
+                            }
+                            else if (stat.stat.name == 'attack'){
+                                pokemonModel.attack = stat.base_stat
+                            }
+                            else if (stat.stat.name == 'defense'){
+                                pokemonModel.defense = stat.base_stat
+                            }
+                            else if (stat.stat.name == 'special-attack'){
+                                pokemonModel.special_attack = stat.base_stat
+                            }
+                            else if (stat.stat.name == 'special-defense'){
+                                pokemonModel.special_defense = stat.base_stat
+                            }
+                            else if (stat.stat.name == 'speed'){
+                                pokemonModel.speed = stat.base_stat
+                            }
+                        })
+                    }
                     // FILL DATA HERE
                     Pokemon.findOne({ dex: singlePokemon.id }).then((poke) => {
                         const newPokemon = new Pokemon({
                             name: singlePokemon.data.name,
                             dex: singlePokemon.data.id,
-                            ability_1: '',
-                            ability_2: '',
-                            hidden_ability: '',
+                            // ability_1: '',
+                            // ability_2: '',
+                            // hidden_ability: '',
                             move_pool: [],
                             // hp: singlePokemon.data.stats[0],
                             // attack: singlePokemon.data.stats[1],
@@ -59,12 +82,13 @@ router.get("/seed",  async (req, res) => {
                         // Call helper functions here
                         abilities(newPokemon)
                         moves(newPokemon)
+                        stats(newPokemon)
 
                         // Save Model to database
 
 
 
-                        // console.log("searching", singlePokemon.data.moves)
+                        // console.log("searching", singlePokemon.data.stats)
                         console.log("newPokemon", newPokemon)
                         })
                 })
