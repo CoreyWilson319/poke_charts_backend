@@ -18,27 +18,28 @@ router.get("/seed",  async (req, res) => {
             allPokemon.data.results.forEach(pokemon => {
                 axios.get(pokemon.url)
                 .then((singlePokemon) => {
+                    // console.log(singlePokemon.data)
                     // FILL DATA HERE
                     Pokemon.findOne({ dex: singlePokemon.id }).then((poke) => {
                         const newPokemon = new Pokemon({
-                            name: singlePokemon.forms.name,
-                            dex: singlePokemon.id,
-                            ability_1: singlePokemon.abilities[0],
-                            ability_2: singlePokemon.abilities[1],
-                            hidden_ability: singlePokemon.abilities[2],
-                            move_pool: singlePokemon.moves,
-                            hp: singlePokemon.stats[0],
-                            attack: singlePokemon.stats[1],
-                            defense: singlePokemon.stats[2],
-                            specialAttack: singlePokemon.stats[3],
-                            specialDefense: singlePokemon.stats[4],
-                            speed: singlePokemon.stats[5],
-                            type_1: singlePokemon.types[0],
-                            type_2: singlePokemon.type[1],
+                            name: singlePokemon.data.name,
+                            dex: singlePokemon.data.id,
+                            // ability_1: singlePokemon.data.abilities[0].ability.name,
+                            // ability_2: singlePokemon.data.abilities[1],
+                            // // hidden_ability: singlePokemon.abilities[2],
+                            move_pool: singlePokemon.data.moves,
+                            // hp: singlePokemon.stats[0],
+                            // attack: singlePokemon.stats[1],
+                            // defense: singlePokemon.stats[2],
+                            // specialAttack: singlePokemon.stats[3],
+                            // specialDefense: singlePokemon.stats[4],
+                            // speed: singlePokemon.stats[5],
+                            // type_1: singlePokemon.types[0],
+                            // type_2: singlePokemon.type[1],
                         })
-                        });
-                    console.log(singlePokemon.data.moves)
-                    console.log(newPokemon)
+                        // console.log("searching", singlePokemon.data.abilities)
+                        console.log("newPokemon", newPokemon)
+                        })
                 })
             })
             if (await allPokemon.data.next != null) {

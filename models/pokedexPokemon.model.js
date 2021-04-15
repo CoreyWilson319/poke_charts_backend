@@ -34,7 +34,7 @@ const pokedexPokemonSchema = new Schema({
     ability_2: {
         type:String
     },
-    id: {
+    dex: {
         type: Number,
     },
     type_1: {
