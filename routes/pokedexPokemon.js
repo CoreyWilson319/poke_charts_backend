@@ -13,6 +13,7 @@ router.get("/seed",  async (req, res) => {
     try {
 
         async function seedData(link){
+
             let allPokemon = await axios.get(link)
             allPokemon = await allPokemon
             allPokemon.data.results.forEach(pokemon => {
@@ -20,24 +21,41 @@ router.get("/seed",  async (req, res) => {
                 .then((singlePokemon) => {
                     // console.log(singlePokemon.data)
                     // FILL DATA HERE
+                    function abilities(pokemonModel){
+                        singlePokemon.data.abilities.forEach(abilitySlot => {
+                            if (abilitySlot.slot == 1){
+                                pokemonModel.ability_1 = abilitySlot.ability.name
+                            }
+                            else if (abilitySlot.slot === 2){
+                                pokemonModel.ability_2 = abilitySlot.ability.name
+                            }
+                            else if (abilitySlot.is_hidden === true){
+                                pokemonModel.hidden_ability = abilitySlot.ability.name
+                            }
+                        });
+                    }
                     Pokemon.findOne({ dex: singlePokemon.id }).then((poke) => {
                         const newPokemon = new Pokemon({
                             name: singlePokemon.data.name,
                             dex: singlePokemon.data.id,
-                            // ability_1: singlePokemon.data.abilities[0].ability.name,
-                            // ability_2: singlePokemon.data.abilities[1],
-                            // // hidden_ability: singlePokemon.abilities[2],
-                            move_pool: singlePokemon.data.moves,
-                            // hp: singlePokemon.stats[0],
-                            // attack: singlePokemon.stats[1],
-                            // defense: singlePokemon.stats[2],
-                            // specialAttack: singlePokemon.stats[3],
-                            // specialDefense: singlePokemon.stats[4],
-                            // speed: singlePokemon.stats[5],
-                            // type_1: singlePokemon.types[0],
-                            // type_2: singlePokemon.type[1],
+                            ability_1: '',
+                            ability_2: '',
+                            hidden_ability: '',
+                            // move_pool: singlePokemon.data.moves,
+                            // hp: singlePokemon.data.stats[0],
+                            // attack: singlePokemon.data.stats[1],
+                            // defense: singlePokemon.data.stats[2],
+                            // specialAttack: singlePokemon.data.stats[3],
+                            // specialDefense: singlePokemon.data.stats[4],
+                            // speed: singlePokemon.data.stats[5],
+                            // type_1: singlePokemon.data.types[0],
+                            // type_2: singlePokemon.data.type[1],
                         })
-                        // console.log("searching", singlePokemon.data.abilities)
+                        abilities(newPokemon)
+
+
+
+                        // console.log("searching", singlePokemon.data.abilities[0])
                         console.log("newPokemon", newPokemon)
                         })
                 })

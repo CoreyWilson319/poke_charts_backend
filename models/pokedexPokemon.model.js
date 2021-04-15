@@ -34,6 +34,9 @@ const pokedexPokemonSchema = new Schema({
     ability_2: {
         type:String
     },
+    hidden_ability: {
+        type:String
+    },
     dex: {
         type: Number,
     },
