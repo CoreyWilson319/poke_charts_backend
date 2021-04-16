@@ -45,31 +45,6 @@ router.post("/new", auth, async (req, res) => {
     } catch(err) {
         res.status(400).json({msg: err})
     }
-    // JSON TO CREATE MEW
-    // { 
-    //    "name": "mew",
-    //     "nickname": "pussycat",
-    //     "level": 100,
-    //     "hp_iv": 31,
-    //     "attack_iv": 31,
-    //     "defense_iv": 31,
-    //     "special_attack_iv": 31,
-    //     "special_defense_iv": 31,
-    //     "speed_iv": 31,
-    //     "hp_ev": 0,
-    //     "attack_ev": 0,
-    //     "defense_ev": 0,
-    //     "special_attack_ev": 252,
-    //     "special_defense_ev": 0,
-    //     "speed_ev": 252,
-    //     "gMax": false,
-    //     "shiny": true,
-    //     "marks": "",
-    //     "moves_1": "transform",
-    //     "moves_2": "rest",
-    //     "moves_3": "sleep talk",
-    //     "moves_4": "snore"
-    // }
 })
 
 // DELETE 'delete/:id'
