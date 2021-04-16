@@ -34,6 +34,7 @@ router.post("/new", auth, async (req, res) => {
             moves_2: req.body.moves_2,
             moves_3: req.body.moves_3,
             moves_4: req.body.moves_4,
+            user_id: req.user.id
         })
         User.findOne({_id: req.user.id}).then((creating_user) => {
             newPokemon.save()

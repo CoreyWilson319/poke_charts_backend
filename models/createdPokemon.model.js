@@ -101,6 +101,9 @@ const createdPokemonSchema = new Schema({
     moves_4: {
         type:String
     },
+    user_id: {
+        type:String
+    }
     // Attempting to use default mongoose created id
     // rid: {
     //     type: Number

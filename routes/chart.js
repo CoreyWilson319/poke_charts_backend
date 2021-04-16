@@ -7,12 +7,35 @@ let User = require("../models/user.model");
 // SHOW ALL USER GENERATED POKEMON
 // PRIVATE
 router.get("/", auth, (req, res) => {
-    chart_mons = User.findById(req.user.id)
-    console.log(chart_mons)
+    try {
+        Pokemon.find({user_id: req.user.id}).then((chart_mons) =>{
+            res.status(200).json(chart_mons)
+        })
+    } catch(err) {
+        res.status(400).json({msg: err})
+    }
 })
 
-// GET 'chart/download'
-// CREATE A FILE FOR THE USER TO DOWNLOAD AN EXCEL SHEET WITH POKEMON THEY'VE CREATED
+// GET 'chart/:id'
+// SHOW INDIVIDUAL INFO OF CREATED POKEMON
 // PRIVATE
+router.get("/:id", auth, (req, res) => {
+    try {
+        Pokemon.find({ _id: req.params.id}).then((chart_mon) => {
+            if (chart_mon.user_id != req.user.id){
+                User.find({ _id:chart_mon.user_id}).then((found_user) => {
+                    if (found_user.public) {
+                        res.status(200).json(chart_mon)
+                    } else {
+                        res.status(400).json({msg: "The person who owns this Pokemon has their settings set to not be Public"})
+                    }
+                })
+            }
+
+        })
+    } catch(err) {
+        res.status(400).json({msg: err})
+    }
+})
 
 module.exports = router;
