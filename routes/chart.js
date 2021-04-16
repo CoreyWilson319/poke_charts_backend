@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const auth = require("../middleware/auth");
 
+
 // GET 'chart'
 // SHOW ALL USER GENERATED POKEMON
 // PRIVATE

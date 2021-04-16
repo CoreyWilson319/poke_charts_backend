@@ -6,36 +6,84 @@ const createdPokemonSchema = new Schema({
     name: {
         type: String,
         required: true,
-        minlength: 8
+        minlength: 1,
+        maxlength: 13,
     },
     nickname: {
         type: String,
+        minlength: 1,
+        maxlength: 13,
     },
     level: {
         type: Number,
+        min: 0,
+        max: 100
     },
-    hp: {
+    hp_iv: {
         type: Number,
+        min: 0,
+        max: 31,
     },
-    attack: {
+    attack_iv: {
         type: Number,
+        min: 0,
+        max: 31,
     },
-    defense: {
+    defense_iv: {
         type: Number,
+        min: 0,
+        max: 31,
     },
-    specialAttack: {
+    special_attack_iv: {
         type: Number,
+        min: 0,
+        max: 31,
     },
-    specialDefense: {
+    special_defense_iv: {
         type: Number,
+        min: 0,
+        max: 31,
+    },
+    speed_iv: {
+        type: Number,
+        min: 0,
+        max: 31,
+    },
+    hp_ev: {
+        type: Number,
+        min: 0,
+        max: 252
+    },
+    attack_ev: {
+        type: Number,
+        min: 0,
+        max: 252
+    },
+    defense_ev: {
+        type: Number,
+        min: 0,
+        max: 252
+    },
+    special_attack_ev: {
+        type: Number,
+        min: 0,
+        max: 252
+    },
+    special_defense_ev: {
+        type: Number,
+        min: 0,
+        max: 252
     },
     speed: {
         type: Number,
+        min: 0,
+        max: 252
+        
     },
-    gMax?: {
+    gMax: {
         type: Boolean,
     },
-    shiny?: {
+    shiny: {
         type: Boolean,
     },
     marks: {
@@ -52,7 +100,11 @@ const createdPokemonSchema = new Schema({
     },
     moves_4: {
         type:String
-    }
+    },
+    // Attempting to use default mongoose created id
+    // rid: {
+    //     type: Number
+    // }
 
 }, {
     timestamps: true,
