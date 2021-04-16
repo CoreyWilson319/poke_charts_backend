@@ -2,29 +2,15 @@ const router = require("express").Router();
 const auth = require("../middleware/auth");
 const { route } = require("./user");
 let Pokemon = require("../models/createdPokemon.model");
+let User = require("../models/user.model");
 
 // POST 'create'
 // Create a pokemon and save it to user
 // PRIVATE
-router.post("/new", async (req, res) => {
-    // THOUGHTS:
-        // CREATE A RANDOM ID FOR EVERY POKEMON CREATED AND USE RECURSION UNTILE THAT ID IS AVAILABLE AND UNIQUE
-        // GO BACK TO CREATEDPOKEMON MODEL AND ADD IVS, EVS
-        // GRAB NAME FROM DATABASE USING FIND
-            // IF NAME NOT FOUND POKEMON DOESN'T EXIST
+router.post("/new", auth, async (req, res) => {
+
     try
     {    
-        // GOING TO TRY TO USE DEFAULT ID TO DO WHAT I WANT
-        // async function rid_generator(pokemonModel) {
-        //     let rid_attempt = Math.floor(Math.random() * 99999999999)
-        //     foundPokemon = await Pokemon.find({rid:rid_attempt})
-        //     if (foundPokemon === []){
-        //         pokemonModel.rid = rid_attempt
-        //     } else {
-        //         rid_generator(pokemonModel)
-        //     }
-        // };
-
         const newPokemon = new Pokemon({
             name: req.body.name,
             nickname: req.body.nickname,
@@ -49,19 +35,46 @@ router.post("/new", async (req, res) => {
             moves_3: req.body.moves_3,
             moves_4: req.body.moves_4,
         })
-
-        // await rid_generator(newPokemon)
-        await newPokemon.save()
+        User.findOne({_id: req.user.id}).then((creating_user) => {
+            newPokemon.save()
+            creating_user.pokemon.push(newPokemon)
+            creating_user.save()
+        })
         res.status(200).json({newPokemon})
     } catch(err) {
         res.status(400).json({msg: err})
     }
+    // JSON TO CREATE MEW
+    // { 
+    //    "name": "mew",
+    //     "nickname": "pussycat",
+    //     "level": 100,
+    //     "hp_iv": 31,
+    //     "attack_iv": 31,
+    //     "defense_iv": 31,
+    //     "special_attack_iv": 31,
+    //     "special_defense_iv": 31,
+    //     "speed_iv": 31,
+    //     "hp_ev": 0,
+    //     "attack_ev": 0,
+    //     "defense_ev": 0,
+    //     "special_attack_ev": 252,
+    //     "special_defense_ev": 0,
+    //     "speed_ev": 252,
+    //     "gMax": false,
+    //     "shiny": true,
+    //     "marks": "",
+    //     "moves_1": "transform",
+    //     "moves_2": "rest",
+    //     "moves_3": "sleep talk",
+    //     "moves_4": "snore"
+    // }
 })
 
 // DELETE 'delete/:id'
 // REMOVE A POKEMON FROM THE DATABASE
 // PRIVATE
-router.delete("/:id/delete", async (req, res) => {
+router.delete("/:id/delete", auth, async (req, res) => {
     try {
         pokemon_to_delete = await Pokemon.findByIdAndDelete(req.params.id)
         res.status(200).json({msg: "Pokemon deleted"})
@@ -74,7 +87,7 @@ router.delete("/:id/delete", async (req, res) => {
 // PUT 'update/:id'
 // UPDATE A POKEMON A USER HAS CREATED
 // PRIVATE
-router.put("/:id/update", async (req, res) => {
+router.put("/:id/update", auth, async (req, res) => {
     try {
         pokemon_to_update = await Pokemon.findByIdAndUpdate(req.params.id,
             {
